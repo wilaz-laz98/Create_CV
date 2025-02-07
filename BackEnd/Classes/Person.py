@@ -9,8 +9,8 @@ class Person:
                          projects = None, clubs = None,
                             technical_skills = None, languages = None,
                                 intrests = None,   ):
-        self.user_name = ""
-        self.password = ""
+        self._user_name = ""
+        self._password = ""
         self._first_name = "" if first_name == None else first_name
         self._last_name = "" if last_name == None else last_name
         self._title = "" if title == None else title
@@ -26,6 +26,26 @@ class Person:
         self._technical_skills = [] if technical_skills == None else technical_skills
         self._languages = [] if languages == None else languages
         self._intrests = [] if intrests == None else intrests
+
+    @staticmethod
+    def not_unique(value):
+        pass
+
+    @property
+    def user_name(self):
+        return self._user_name
+
+    @user_name.setter
+    def user_name(self, value):
+        self._user_name = value
+
+    @property
+    def password(self):
+        return self._password
+
+    @user_name.setter
+    def password(self, value):
+        self._password = value
 
     @property
     def first_name(self):
