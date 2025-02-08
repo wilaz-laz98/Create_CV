@@ -1,3 +1,10 @@
+import Education as edu
+import Experience as exp
+import Project as proj
+import Club as cl
+import TechSkill as ts
+import lang
+import Cv as cv
 
 
 class Person:
@@ -19,13 +26,15 @@ class Person:
         self._phone_num = "" if phone_num == None else phone_num
         self._linkedin_account = "" if linkedin_account == None else linkedin_account
         self._github_account = "" if github_account == None else github_account
-        self._educations = [] if educations == None else educations
-        self._experiences = [] if experiences == None else experiences
-        self._projects = [] if projects == None else projects
-        self._clubs = [] if clubs == None else clubs
-        self._technical_skills = [] if technical_skills == None else technical_skills
-        self._languages = [] if languages == None else languages
+        self._educations = [edu] if educations == None else educations
+        self._experiences = [exp] if experiences == None else experiences
+        self._projects = [proj] if projects == None else projects
+        self._clubs = [cl] if clubs == None else clubs
+        self._technical_skills = [ts] if technical_skills == None else technical_skills
+        self._languages = [lang] if languages == None else languages
         self._intrests = [] if intrests == None else intrests
+
+        self._cvs = [cv]
 
     @staticmethod
     def not_unique(value):
@@ -116,7 +125,7 @@ class Person:
         return self._educations
 
     @educations.setter
-    def educations(self, value):
+    def educations(self, value: edu):
         self._educations.append(value)
 
     @property
@@ -124,7 +133,7 @@ class Person:
         return self._experiences
 
     @experiences.setter
-    def experiences(self, value):
+    def experiences(self, value: exp):
         self._experiences.append(value)
 
     @property
@@ -132,7 +141,7 @@ class Person:
         return self._projects
 
     @projects.setter
-    def projects(self, value):
+    def projects(self, value: proj):
         self._projects.append(value)
 
     @property
@@ -140,7 +149,7 @@ class Person:
         return self._clubs
 
     @clubs.setter
-    def clubs(self, value):
+    def clubs(self, value: cl):
         self._clubs.append(value)
 
     @property
@@ -148,7 +157,7 @@ class Person:
         return self._technical_skills
 
     @technical_skills.setter
-    def technical_skills(self, value):
+    def technical_skills(self, value: ts):
         self._technical_skills.append(value)
 
     @property
@@ -156,7 +165,7 @@ class Person:
         return self._languages
 
     @languages.setter
-    def languages(self, value):
+    def languages(self, value: lang):
         self._languages.append(value)
 
     @property
@@ -164,5 +173,13 @@ class Person:
         return self._intrests
 
     @intrests.setter
-    def intrests(self, value):
+    def intrests(self, value :str):
+        self._intrests.append(value)
+
+    @property
+    def cvs(self):
+        return self.cvs
+
+    @intrests.setter
+    def cvs(self, value: cv):
         self._intrests.append(value)
