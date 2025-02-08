@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/src/pages/Auth/SignUpPage/signup.dart';
@@ -33,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
       });
     });
     Timer(Duration(seconds: 4), () {
-      Utils.startTyping('Ready to Create your CV', (updatedText) {
+      Utils.startTyping('Ready to Create your CV?', (updatedText) {
         setState(() {
           displayText2 = updatedText;
         });

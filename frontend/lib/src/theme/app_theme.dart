@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static final backgrouddark = const Color.fromARGB(255, 33, 47, 61);
+  static final backgrouddark = const Color.fromARGB(255, 5, 15, 25);
   static final primarydark = Color.fromARGB(255, 52, 73, 94);
   static final secondarydark = const Color.fromARGB(255, 97, 106, 107);
   static final secondary1 = const Color.fromARGB(255, 214, 137, 16);
@@ -85,26 +85,30 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-      textStyle: WidgetStatePropertyAll(TextStyle(
-        fontFamily: 'Courier New',
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-      )),
+          textStyle: WidgetStatePropertyAll(TextStyle(
+          fontFamily: 'Courier New',
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+         )),
       backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 12, 12, 12)),
-      foregroundColor:
-          WidgetStatePropertyAll(Color.fromARGB(255, 179, 179, 179)),
+      foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 179, 179, 179)),
       overlayColor: WidgetStatePropertyAll(Color.fromARGB(115, 179, 179, 179)),
-    )),
+      )
+    ),
     inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(),
+      // floatingLabelBehavior: FloatingLabelBehavior.always,
+
       labelStyle: TextStyle(
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: textdark,
         fontSize: 12.0,
         fontFamily: 'Courier New',
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.bold,
       ),
       hintStyle: TextStyle(
-        color: const Color.fromARGB(234, 247, 247, 247),
-        fontSize: 12.0,
+        color: secondarydark,
+        fontSize: 10.0,
         fontFamily: 'Courier New',
         fontWeight: FontWeight.normal,
       ),
