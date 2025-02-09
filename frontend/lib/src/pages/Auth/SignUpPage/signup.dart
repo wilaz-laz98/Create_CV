@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: AppTheme.primarydark,
+                  color: AppTheme.secondarydark,
                   width: 1,
                 )
               ),
@@ -53,6 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: TextField(
                         decoration: InputDecoration(
                             labelText: 'Email',
+                            prefixIcon: Icon(Icons.email_outlined),
                             hintText: 'Enter your email'),
                       ),
                     ),
@@ -62,16 +63,19 @@ class _SignUpPageState extends State<SignUpPage> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Password',
-                          hintText: 'Enter your password, 12 characters, 1Cap, 1Special, 1num ',
+                          prefixIcon: Icon(Icons.password_outlined),
+                          helper: Text('must be : 12 characters, 1Capital, 1Special, 1 number'),
+                          hintText: 'Enter your password',
                         ),
                       )
                     ),
-                    // Expanded(
-                    //   child: ElevatedButton(
-                    //     onPressed: ,
-                    //     child: Text('Sign UP')
-                    //   )
-                    // )
+                    Expanded(
+                      flex : 3,
+                      child: ElevatedButton(
+                        onPressed: ,
+                        child: Text('Sign UP')
+                      )
+                    )
                   ],
                 )
             )

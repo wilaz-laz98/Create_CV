@@ -95,11 +95,17 @@ class AppTheme {
       overlayColor: WidgetStatePropertyAll(Color.fromARGB(115, 179, 179, 179)),
       )
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(),
-      focusedBorder: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: secondarydark,
+          width: 1,
+        )
+      ),
       // floatingLabelBehavior: FloatingLabelBehavior.always,
-
+      prefixIconColor: secondarydark,
       labelStyle: TextStyle(
         color: textdark,
         fontSize: 12.0,
