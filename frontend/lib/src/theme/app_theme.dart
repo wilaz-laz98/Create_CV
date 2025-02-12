@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final backgrouddark = const Color.fromARGB(255, 5, 15, 25);
   static final primarydark = Color.fromARGB(255, 52, 73, 94);
-  static final secondarydark = const Color.fromARGB(255, 97, 106, 107);
+  static final secondarydark = const Color.fromARGB(168, 97, 106, 107);
   static final secondary1 = const Color.fromARGB(255, 214, 137, 16);
   static final secondary2 = const Color.fromARGB(255, 176, 58, 46);
   static final textdark = const Color.fromARGB(255, 121, 125, 127);
@@ -83,17 +83,29 @@ class AppTheme {
         ),
       ),
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-          textStyle: WidgetStatePropertyAll(TextStyle(
-          fontFamily: 'Courier New',
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-         )),
-      backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 12, 12, 12)),
-      foregroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 179, 179, 179)),
-      overlayColor: WidgetStatePropertyAll(Color.fromARGB(115, 179, 179, 179)),
-      )
+      style: ButtonStyle(
+        textStyle: WidgetStatePropertyAll(
+          TextStyle(
+            fontFamily: 'Courier New',
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        side: WidgetStateProperty.all(
+            BorderSide(
+              color: secondarydark,
+              width: 1,
+            ),
+        ),
+        shape: WidgetStatePropertyAll(
+          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        backgroundColor: WidgetStatePropertyAll(backgrouddark),
+        foregroundColor: WidgetStatePropertyAll(textdark),
+        overlayColor: WidgetStatePropertyAll(secondarydark)
+      ),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
@@ -126,6 +138,7 @@ class AppTheme {
       //   ),
       // ),
     ),
+    
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: textdark,
     ),

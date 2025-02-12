@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class Utils {
@@ -24,7 +23,7 @@ class Utils {
   }
 
   static void startTyping(String text, Function(String) onUpdate,
-      {int speed = 200}) {
+      {int speed = 100}) {
     int index = 0;
     Timer.periodic(Duration(milliseconds: speed), (Timer timer) {
       if (index < text.length) {

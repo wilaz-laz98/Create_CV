@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/src/pages/Auth/LoginPage/login.dart';
 import 'package:frontend/src/pages/Auth/SignUpPage/signup.dart';
+import 'package:frontend/src/pages/homePage/home.dart';
 import 'package:frontend/src/pages/splashPage/splash.dart';
 
 
@@ -15,9 +16,10 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     initial: (context) => SplashPage(),
+    // initial: (context) => HomePage(),
     login: (context) => LoginPage(),
     register: (context) => SignUpPage(),
-    // home: (context) => HomePage(),
+    home: (context) => HomePage(),
     // profile: (context) => ProfilePage(),
   };
 

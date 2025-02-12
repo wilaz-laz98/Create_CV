@@ -8,21 +8,21 @@ import Cv as cv
 
 
 class Person:
-    def __init__(self, user_name, password,
+    def __init__(self,  email, password, user_name=None,
                  first_name = None, last_name = None, title = None,
-                   motivation = None, email = None, phone_num = None,
+                   motivation = None, phone_num = None,
                      linkedin_account = None, github_account = None,
                        educations = None, experiences = None,
                          projects = None, clubs = None,
                             technical_skills = None, languages = None,
                                 intrests = None,   ):
-        self._user_name = ""
+        self._email = ""
         self._password = ""
+        self._user_name = "" if user_name == None else user_name
         self._first_name = "" if first_name == None else first_name
         self._last_name = "" if last_name == None else last_name
         self._title = "" if title == None else title
         self._motivation = "" if motivation == None else motivation
-        self._email = "" if email == None else email
         self._phone_num = "" if phone_num == None else phone_num
         self._linkedin_account = "" if linkedin_account == None else linkedin_account
         self._github_account = "" if github_account == None else github_account

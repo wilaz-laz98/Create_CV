@@ -1,0 +1,13 @@
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/CMakeFiles/INSTALL.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/CMakeFiles/ALL_BUILD.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/CMakeFiles/ZERO_CHECK.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/flutter/CMakeFiles/flutter_wrapper_plugin.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/flutter/CMakeFiles/flutter_wrapper_app.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/flutter/CMakeFiles/flutter_assemble.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/flutter/CMakeFiles/INSTALL.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/runner/CMakeFiles/frontend.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/runner/CMakeFiles/INSTALL.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/runner/CMakeFiles/ALL_BUILD.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/plugins/window_size/CMakeFiles/window_size_plugin.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/plugins/window_size/CMakeFiles/INSTALL.dir
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/plugins/window_size/CMakeFiles/ALL_BUILD.dir

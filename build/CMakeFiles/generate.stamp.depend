@@ -1,0 +1,22 @@
+# CMake generation dependency list for this directory.
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/CMakeFiles/3.29.5-msvc4/CMakeCXXCompiler.cmake
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/CMakeFiles/3.29.5-msvc4/CMakeRCCompiler.cmake
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/build/CMakeFiles/3.29.5-msvc4/CMakeSystem.cmake
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/frontend/windows/CMakeLists.txt
+D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/frontend/windows/flutter/generated_plugins.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeCXXInformation.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeGenericSystem.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeRCInformation.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Compiler/MSVC-CXX.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Compiler/MSVC.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Platform/Windows-MSVC-CXX.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Platform/Windows-MSVC.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Platform/Windows.cmake
+D:/ProgramFiles/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake
