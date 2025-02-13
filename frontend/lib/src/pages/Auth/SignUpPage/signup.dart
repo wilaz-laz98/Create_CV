@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend/src/pages/homePage/home.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/Shared_preferences.dart';
 import 'package:password_strength/password_strength.dart';
 
 import 'package:frontend/src/pages/Auth/LoginPage/login.dart';

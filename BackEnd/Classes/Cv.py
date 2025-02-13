@@ -1,8 +1,9 @@
-import Person as p
+
+
 class Cv:
     def __init__(self, file_name=None, person=None, template=None):
         self._file_name = "default" if file_name == None else file_name
-        self._person = p() if person == None else person
+        # self._person = p() if person == None else person
         self._template = "default" if template == None else template
 
     @property

@@ -1,10 +1,10 @@
-import Education as edu
-import Experience as exp
-import Project as proj
-import Club as cl
-import TechSkill as ts
-import lang
-import Cv as cv
+from .Education  import Education as edu
+from .Experience import Experience as exp
+from .Project import Project as proj
+from .Club import Club as cl
+from .TechSkill import TechSkill as ts
+from .lang import Language as lang
+from .Cv import Cv as cv
 
 
 class Person:

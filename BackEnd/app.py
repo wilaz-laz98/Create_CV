@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 import datetime
 
-from backend.Classes import Person
+from .Classes.Person import Person
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'create_cv_secret_key'
@@ -20,7 +20,7 @@ def SignUp():
     if not email or not password:
         return jsonify({'message': 'missing email or password'}), 400
 
-    if email in users:
+    if email in users_db:
         return jsonify({'message': 'User already exist!'}), 400
 
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')

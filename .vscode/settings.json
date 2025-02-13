@@ -1,3 +1,6 @@
 {
-    "cmake.sourceDirectory": "D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/frontend/windows"
+    "cmake.sourceDirectory": "D:/MAIN/PROFESSIONAL/PROJECTS/create_cv/Create_CV/frontend/windows",
+    "python.analysis.extraPaths": [
+        "./backend/Classes"
+    ]
 }
