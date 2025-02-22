@@ -30,8 +30,8 @@ class _LoginPageState extends State<LoginPage> {
         'password': _passwordController.text,
       }),
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
 
     try {
       if (response.statusCode == 200) {

@@ -2,6 +2,12 @@ class Language:
     def __init__(self, language=None, level=None):
         self._language = '' if language == None else language
         self._level = '' if level == None else level
+    @staticmethod
+    def question():
+        return {
+            "language": "What language do you speak?",
+            "level": "What is your level?"
+        }
 
     @property
     def language(self):

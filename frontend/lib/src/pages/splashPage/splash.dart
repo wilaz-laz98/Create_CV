@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   String displayText2 = '';
 
   void startTimer() {
-    Timer(Duration(seconds: 7), () {
+    Timer(Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(Utils.createRoute(SignUpPage()));
     });
   }

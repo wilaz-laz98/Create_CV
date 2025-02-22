@@ -7,6 +7,7 @@ import 'package:password_strength/password_strength.dart';
 import 'package:frontend/src/pages/Auth/LoginPage/login.dart';
 import 'package:frontend/src/Utils/utils.dart';
 import 'package:frontend/src/theme/app_theme.dart';
+import 'package:shared_preferences/Shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -16,53 +17,70 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  // Text feild controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  // Message from API request
   String _message = '';
+  // Display a text dynamically variable
   String displayText1 = '';
+  // Check password strength variable
   double _strength = 0;
 
+  // Sign up function
   Future<void> _signup() async {
+    // API request to /signup function
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5000/signup'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
+        // Passing the email and password
         'email': _emailController.text,
         'password': _passwordController.text,
       }),
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
     try {
+      // If Signup successful
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('is_first_time', true);
         setState(() {
+          // show message : user registred successfully
           _message = data['message'];
-          Navigator.of(context).pushReplacement(Utils.createRoute(HomePage()));
+          // login :
+          _goToLoginPage();
         });
+        // If Signup fails
       } else {
         final data = jsonDecode(response.body);
+        // show fail message in snackbar
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(data['message']),
         ));
       }
+      // Catch any exception and display it in snakbar
     } catch (e) {
       print('Error parsing JSON: $e');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Invalid response from server'),
       ));
     }
-  }
+  } // End of signup function
 
+  // Navigate to login page
   void _goToLoginPage() {
     Navigator.of(context).pushReplacement(Utils.createRoute(LoginPage()));
-  }
+  } // End of Navigate to login page Function
 
+  // Calculate the strength of password function
   void _calcStrength(String password) {
     setState(() {
       _strength = estimatePasswordStrength(password);
     });
-  }
+  } // end of calculate strength of password function
 
   @override
   void initState() {

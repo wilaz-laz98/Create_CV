@@ -5,6 +5,15 @@ class Education:
         self._degree = '' if degree == None else degree
         self._school = '' if school == None else school
         self._location = '' if location == None else location
+    @staticmethod
+    def question():
+        return {
+            "start_date": "When did you start this education?",
+            "end_date": "When did you finish this education?",
+            "degree": "What degree did you get?",
+            "school": "What school did you attend?",
+            "location": "Where was the school located?"
+        }
 
     @property
     def start_date(self):

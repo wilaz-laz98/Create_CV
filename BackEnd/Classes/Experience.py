@@ -5,6 +5,15 @@ class Experience:
         self._position = '' if position == None else position
         self._company = '' if company == None else company
         self._tasks = [] if tasks == None else tasks
+    @staticmethod
+    def question():
+        return {
+            "start_date": "When did you start this experience?",
+            "end_date": "When did you finish this experience?",
+            "position": "What was your position?",
+            "company": "What company did you work for?",
+            "tasks": "What were your tasks?"
+        }
 
     @property
     def start_date(self):

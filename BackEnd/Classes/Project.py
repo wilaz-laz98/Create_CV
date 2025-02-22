@@ -4,6 +4,14 @@ class Project:
         self._goal = '' if goal == None else goal
         self._key_tech = [] if key_tech == None else key_tech
         self._tasks = [] if tasks == None else tasks
+    @staticmethod
+    def question():
+        return {
+            "name": "What is the name of the project?",
+            "goal": "What was the goal of the project?",
+            "key_tech": "What key technologies did you use?",
+            "tasks": "What were your tasks?"
+        }
 
     @property
     def name(self):

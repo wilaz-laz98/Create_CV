@@ -13,10 +13,10 @@ class AppTheme {
       surface: backgrouddark,
       onSurface: textdark,
 
-      primary: backgrouddark,
+      primary: primarydark,
       onPrimary: textdark,
 
-      secondary: primarydark,
+      secondary: secondarydark,
       onSecondary: textdark,
 
       error: secondary2,
@@ -138,7 +138,7 @@ class AppTheme {
       //   ),
       // ),
     ),
-    
+
     progressIndicatorTheme: ProgressIndicatorThemeData(
       color: textdark,
     ),
