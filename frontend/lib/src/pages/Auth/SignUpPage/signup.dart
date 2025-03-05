@@ -99,9 +99,10 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
               border: Border.all(
-            color: AppTheme.secondarydark,
-            width: 1,
+            color: AppTheme.darkTheme.colorScheme.onSurface,
+
           )),
           child: SizedBox(
               height: 300,
@@ -153,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       'Password Strength: ${(_strength * 100).toStringAsFixed(2)}%'),
                   LinearProgressIndicator(
                     value: _strength,
-                    backgroundColor: Colors.grey[300],
+                    backgroundColor: const Color.fromARGB(255, 164, 163, 163),
                     color: _strength < 0.3
                         ? Colors.red
                         : _strength < 0.7
@@ -164,6 +165,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       flex: 2,
                       child: Container(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
                               flex: 2,
@@ -171,8 +173,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   onPressed: _goToLoginPage,
                                   child: Text(
                                     'Already got an account? login',
-                                    style:
-                                        AppTheme.darkTheme.textTheme.bodyMedium,
                                   )),
                             ),
                             Expanded(

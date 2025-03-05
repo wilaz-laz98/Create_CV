@@ -80,9 +80,9 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
           decoration: BoxDecoration(
-              border: Border.all(
-            color: AppTheme.secondarydark,
-            width: 1,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: AppTheme.darkTheme.colorScheme.onSurface,
           )),
           child: SizedBox(
               height: 300,
@@ -115,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: 'Email',
                           prefixIcon: Icon(Icons.email_outlined),
                           hintText: 'Enter your email'),
+
                     ),
                   ),
                   Expanded(
@@ -133,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                       flex: 2,
                       child: Container(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
                               flex: 2,
@@ -140,8 +142,6 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: _goToSignupPage,
                                   child: Text(
                                     "Don't have an account? Signup",
-                                    style:
-                                        AppTheme.darkTheme.textTheme.bodyMedium,
                                   )),
                             ),
                             Expanded(

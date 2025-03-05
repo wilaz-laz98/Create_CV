@@ -7,7 +7,7 @@ class Education:
         self._location = '' if location == None else location
     @staticmethod
     def question():
-        return {
+        return {#TODO :make it a list and see what goes?
             "start_date": "When did you start this education?",
             "end_date": "When did you finish this education?",
             "degree": "What degree did you get?",

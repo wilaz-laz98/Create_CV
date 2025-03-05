@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -21,13 +22,22 @@ class _CvAddPageState extends State<CvAddPage> {
   Map<String, String> _templates = {};
   // selected template
   String _selectedTemplate = '';
-
-  int progress = 0;
+  // progress of questions
+  int categoryProgress = 0;
+  int questionProgress = 0;
+  // global question received from the server
   Map<String, dynamic> questions = {};
-  List<Map<String, String>> _questionsList = [];
+  // the main categories of the cv template, categories = [Personal info, Education, Work Experience, ...]
+  List<String> _categories = [];
+  // list of questions per category, questionlist = [{pesonal_question01: text, personal_question02: text, ...}, {education_question01: text, education_question02: text, ...}, ...]
+  List<List<String>> _questionsList = [];
+  // list of labels per category
+  List<List<String>> _labelsList = [];
+  // answers to the questions per category, answers = {"personal questions" :{personal_question01: answer, personal_question02: answer, ...}, "education questions" :{education_question01: answer, education_question02: answer, ...}, ...}
   Map<String, dynamic> _answers = {};
   // Text Field Controller
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _alterController = TextEditingController();
 
   Future<void> _getTemplates() async {
     final response =
@@ -82,7 +92,6 @@ class _CvAddPageState extends State<CvAddPage> {
     if (template != null) {
       setState(() {
         _selectedTemplate = template;
-        // print('selected template: $_selectedTemplate');
         _getQuestions();
         _showScript = false;
       });
@@ -102,8 +111,7 @@ class _CvAddPageState extends State<CvAddPage> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
       setState(() {
-        questions =  Map<String, dynamic>.from(data['questions']);
-        print('questions: $questions');
+        questions = Map<String, dynamic>.from(data['questions']);
         _populateQuestions();
       });
     } else {
@@ -112,42 +120,191 @@ class _CvAddPageState extends State<CvAddPage> {
     }
   }
 
-  void _populateQuestions()  {
+  Widget _highlightCategories(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          for (int i = 0; i < _categories.length; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: SizedBox(
+                width: 150,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      categoryProgress = i;
+                      questionProgress = 0;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: i == categoryProgress
+                        ? AppTheme.darkTheme.colorScheme.secondary
+                        : AppTheme.darkTheme.colorScheme.primary,
+                  ),
+                  child: Text(
+                    _categories[i],
+                    style: TextStyle(
+                      color: i == categoryProgress
+                          ? AppTheme.darkTheme.colorScheme.onSecondary
+                          : AppTheme.darkTheme.colorScheme.onPrimary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  void _populateQuestions() {
+    if (questions == null) {
+      throw ('Questions object is null');
+    }
     questions.forEach((category, questionSet) {
-      if (questionSet is List) {
-        for (var question in questionSet) {
-          _questionsList.add(question);
-        }
-      } else if (questionSet is Map) {
-        questionSet.forEach((question, text) {
-          _questionsList.add({question: text});
-        });
-      }
+      _categories.add(category);
+      List<String> tempQuestions = [];
+      List<String> tempLabels = [];
+      questionSet.forEach((label, question) {
+        tempLabels.add(label);
+        tempQuestions.add(question);
+      });
+      _labelsList.add(tempLabels);
+      _questionsList.add(tempQuestions);
+      print(_labelsList);
     });
   }
 
   void _nextQuestion() {
     setState(() {
+      // prevent moving forward if controller is empty
       if (_controller.text.isNotEmpty) {
-        _answers[_questionsList[progress].keys.first] = _controller.text;
-        _controller.clear();
-        if (progress < _questionsList.length - 1) {
-          progress++;
+        // crete an empty set for entries of personal infos category
+        if (_categories[categoryProgress] == "Personal Infos") {
+          if (!_answers.containsKey(_categories[categoryProgress])) {
+            _answers[_categories[categoryProgress]] = {};
+          }
+          // save the answers of personal infos
+          _answers[_categories[categoryProgress]]
+                  [_labelsList[categoryProgress][questionProgress]] =
+              _controller.text;
         } else {
-          print("all answers completed : $_answers");
-          // _submitAnswers();
+          // create an empty list for ansewrs of categories other than personal infos
+          if (!_answers.containsKey(_categories[categoryProgress])) {
+            _answers[_categories[categoryProgress]] = [];
+          }
+          // add an empty map for an entry of category other than personal infos if list is empty or we already completed the last entry
+          if ((_answers[_categories[categoryProgress]]?.isEmpty ?? true) ||
+              _answers[_categories[categoryProgress]]!.last.length ==
+                  _questionsList[categoryProgress].length) {
+            _answers[_categories[categoryProgress]]!.add({});
+          }
+          // save an entry of categories other than personal infos
+          _answers[_categories[categoryProgress]]!
+                  .last[_labelsList[categoryProgress][questionProgress]] =
+              _controller.text;
         }
+
+        // next question
+        questionProgress++;
+
+        // if questions per category are complete
+        if (questionProgress >= _questionsList[categoryProgress].length) {
+          // reset question counter
+          questionProgress = 0;
+          // for categories other than personal infor show add more prompt
+          if (_categories[categoryProgress] != "Personal Infos") {
+            _showAddMorePrompt();
+          } else {
+            //progress to next category
+            categoryProgress++;
+          }
+        }
+        _controller.clear();
       }
     });
+    print(_answers);
+  }
+
+  void _showAddMorePrompt() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add Another Entry?'),
+          content: Text('Do you want to add another entry for this category?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  // _isCategoryQuestionsComplete = true;
+                  categoryProgress++;
+                });
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  questionProgress = 0;
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _addMore() {
+    setState(() {
+      if (_controller.text.isNotEmpty) {
+        if (_categories[categoryProgress] == "Personal Infos") {
+          if (!_answers.containsKey(_categories[categoryProgress])) {
+            _answers[_categories[categoryProgress]] = {};
+          }
+          _answers[_categories[categoryProgress]]
+                  [_labelsList[categoryProgress][questionProgress]] =
+              _controller.text;
+        } else {
+          if (!_answers.containsKey(_categories[categoryProgress])) {
+            _answers[_categories[categoryProgress]] = [];
+          }
+
+          if ((_answers[_categories[categoryProgress]]?.isEmpty ?? true) ||
+              _answers[_categories[categoryProgress]]!.last.length ==
+                  _questionsList[categoryProgress].length) {
+            _answers[_categories[categoryProgress]]!.add({});
+          }
+
+          _answers[_categories[categoryProgress]]!
+                  .last[_labelsList[categoryProgress][questionProgress]] =
+              _controller.text;
+          questionProgress = 0;
+        }
+
+        _controller.clear();
+      }
+    });
+    // print(_answers);
   }
 
   void _previousQuestion() {
     setState(() {
-      if (progress > 0) {
-        progress--;
-        _controller.text = _answers[_questionsList[progress].keys.first] ?? '';
+      if (questionProgress > 0) {
+        questionProgress--;
+      } else {
+        categoryProgress--;
+        questionProgress = _questionsList[categoryProgress].length - 1;
       }
     });
+    print(_answers);
   }
 
   void _script() {
@@ -181,39 +338,196 @@ class _CvAddPageState extends State<CvAddPage> {
     });
   }
 
-  Widget _questionTypes(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              onPressed: () => print("helloworld"), child: Text("Personal")),
-        ),
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              onPressed: () => print("helloworld"), child: Text("Education")),
-        ),
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              onPressed: () => print("helloworld"), child: Text("Experience")),
-        ),
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              onPressed: () => print("helloworld"), child: Text("Projects")),
-        ),
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              onPressed: () => print("helloworld"), child: Text("other")),
-        ),
-      ],
+  Widget _answersPreview() {
+    return Container(
+      width: 450,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppTheme.darkTheme.colorScheme.onPrimary),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Column(
+        children: [
+          Text('Answers Preview',
+              style: AppTheme.darkTheme.textTheme.headlineMedium),
+          SizedBox(height: 5),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _answers.length,
+              itemBuilder: (context, index) {
+                final category = _categories[index];
+                final answers = _answers[category];
+                return Column(
+                  children: [
+                    Text(category,
+                        style: AppTheme.darkTheme.textTheme.headlineSmall),
+                    SizedBox(height: 10),
+                    if (category == "Personal Infos")
+                      Column(
+                        children: [
+                          for (var label in answers.keys)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(label,
+                                    style: AppTheme
+                                        .darkTheme.textTheme.headlineSmall),
+                                TextButton(
+                                  onPressed: () {
+                                    _showChangePrompt(category, label);
+                                  },
+                                  child: Text(answers[label],
+                                      style: AppTheme
+                                          .darkTheme.textTheme.headlineSmall),
+                                )
+                              ],
+                            ),
+                        ],
+                      )
+                    else
+                      Column(
+                        children: [
+                          for (var answerSet in answers)
+                            Column(
+                              children: [
+                                for (var label in answerSet.keys)
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(label,
+                                          style: AppTheme.darkTheme.textTheme
+                                              .headlineSmall),
+                                      TextButton(
+                                        onPressed: () {
+                                          _showChangeDeletePrompt(
+                                              category, answerSet, label);
+                                        },
+                                        child: Text(answerSet[label],
+                                            style: AppTheme.darkTheme.textTheme
+                                                .headlineSmall),
+                                      )
+                                    ],
+                                  ),
+                                Text('______________'),
+                              ],
+                            ),
+                        ],
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
+  void _showChangeDeletePrompt(category, set, label) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('change value'),
+              content: Container(
+                height: 100,
+                width: 300,
+                child: Column(
+                  children: [
+                    Text(label),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: _alterController,
+                    )
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            (_answers[category] as List<dynamic>)
+                                .removeWhere((entry) => entry == set);
+                          });
+                          questionProgress = 0;
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Delete")),
+                    ElevatedButton(
+                        onPressed: () {
+                          // [_labelsList[categoryProgress][questionPrrogress]]
+                          final int categoryprog =
+                              _categories.indexOf(category);
+                          final int setNum = _answers[category].indexOf(
+                              set); // print("categoryprog : $categoryprog");
+                          final int labelprog =
+                              _labelsList[categoryprog].indexOf(label);
+                          // print("labelprog : $labelprog");
+                          setState(() {
+                            _answers[category][setNum]
+                                    [_labelsList[categoryprog][labelprog]] =
+                                _alterController.text;
+                          });
+                          // print(_answers);
+                          _alterController.clear();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("change")),
+                  ],
+                ),
+              ]);
+        });
+  }
+
+  void _showChangePrompt(category, label) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('change value'),
+              content: Container(
+                height: 100,
+                width: 300,
+                child: Column(
+                  children: [
+                    Text(label),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: _alterController,
+                    )
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                    onPressed: () {
+                      // [_labelsList[categoryProgress][questionPrrogress]]
+                      final int categoryprog = _categories.indexOf(category);
+                      // print("categoryprog : $categoryprog");
+                      final int labelprog =
+                          _labelsList[categoryprog].indexOf(label);
+                      // print("labelprog : $labelprog");
+                      setState(() {
+                        _answers[category]
+                                [_labelsList[categoryprog][labelprog]] =
+                            _alterController.text;
+                      });
+                      // print(_answers);
+                      _alterController.clear();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("change")),
+              ]);
+        });
+  }
 
   @override
   void initState() {
@@ -223,24 +537,23 @@ class _CvAddPageState extends State<CvAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    // String questionText = _questionsList[progress].values.first ;
-    // double progress1 = (progress + 1) / _questionsList.length ;
-
     String questionText = 'No questions available';
     double progress1 = 0.0;
 
-    // Check if _questionsList is not empty
     if (_questionsList.isNotEmpty) {
-      // Ensure progress is within valid range
-      if (progress >= 0 && progress < _questionsList.length) {
-        questionText = _questionsList[progress].values.first;
-        progress1 = (progress + 1) / _questionsList.length;
+      if (categoryProgress >= 0 && categoryProgress < _categories.length) {
+        questionText = _questionsList[categoryProgress][questionProgress];
+        progress1 = (categoryProgress + 1) / _categories.length;
       }
     }
+
     return Scaffold(
-        body: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Container(
+      body: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
                 child: _showScript
                     ? Center(
                         child: Column(
@@ -257,54 +570,85 @@ class _CvAddPageState extends State<CvAddPage> {
                           )
                         ],
                       ))
-                    : Column(
-                        children: <Widget>[
-                          LinearProgressIndicator(value: progress1),
-                          SizedBox(height: 30),
-                          _questionTypes(context),
-                          SizedBox(height: 30),
-                          Container(
-                            margin: EdgeInsets.all(100),
-                            padding: EdgeInsets.all(30),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                  color:
-                                      AppTheme.darkTheme.colorScheme.onPrimary),
-                            ),
-                            child: Column(children: [
-                              Text(
-                                questionText,
-                                style:
-                                    AppTheme.darkTheme.textTheme.headlineMedium,
-                              ),
-                              SizedBox(height: 20),
-                              TextField(
-                                controller: _controller,
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'your answer'),
-                              ),
-                              SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  if (progress > 0)
-                                    ElevatedButton(
-                                      onPressed: _previousQuestion,
-                                      child: Text('Previous'),
+                    : Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: <Widget>[
+                                LinearProgressIndicator(value: progress1),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: _highlightCategories(context),
+                                ),
+                                Flexible(
+                                  flex: 4,
+                                  child: Center(
+                                    child: Container(
+                                      height: 200,
+                                      margin: EdgeInsets.all(10),
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            color: AppTheme.darkTheme
+                                                .colorScheme.onPrimary),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            questionText,
+                                            style: AppTheme.darkTheme.textTheme
+                                                .headlineMedium,
+                                          ),
+                                          SizedBox(height: 20),
+                                          TextField(
+                                            controller: _controller,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                labelText: 'your answer'),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              if (questionProgress > 0)
+                                                ElevatedButton(
+                                                  onPressed: _previousQuestion,
+                                                  child: Text('Previous'),
+                                                ),
+                                              ElevatedButton(
+                                                onPressed: _nextQuestion,
+                                                child: Text('Next'),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-
-                                  ElevatedButton(
-                                    onPressed: _nextQuestion,
-                                    child: Text('Next'),
                                   ),
-                                ],
-                              ),
-                            ]),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            flex: 1,
+                            child: _answersPreview(),
                           ),
                         ],
-                      ))));
+                      ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -32,7 +32,7 @@ class Cv(ABC):
     @staticmethod
     def questions():
         return {
-            "1": {
+            "Personal Infos": {
                 "First Name": "What is your first name?",
                 "Last Name": "What is your last name?",
                 "Job Title": "What is your job title?",
@@ -40,9 +40,9 @@ class Cv(ABC):
                 "E-mail": "What is your e-mail?",
                 "Phone Number": "What is your phone number?",
             },
-            "2": Education.question(),
-            "3": Experience.question(),
-            "4" : Language.question(),
+            "Educations": Education.question(),
+            "Experiences": Experience.question(),
+            "Languages" : Language.question(),
         }
 
     @property
@@ -154,13 +154,13 @@ class BasicTemplateForStem(Cv):
     @staticmethod
     def questions():
         questions = Cv.questions()
-        questions["1"].update({
+        questions["Personal Infos"].update({
             "LinkedIn Account": "What is your LinkedIn account?",
             "GitHub Account": "What is your GitHub account?",
         })
         questions.update({
-            "5": Project.question(),
-            "6": TechSkill.question(),
+            "Projects": Project.question(),
+            "Technical Skills": TechSkill.question(),
         })
 
         return questions

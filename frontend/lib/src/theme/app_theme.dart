@@ -1,30 +1,36 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static final backgrouddark = const Color.fromARGB(255, 5, 15, 25);
-  static final primarydark = Color.fromARGB(255, 52, 73, 94);
-  static final secondarydark = const Color.fromARGB(168, 97, 106, 107);
-  static final secondary1 = const Color.fromARGB(255, 214, 137, 16);
-  static final secondary2 = const Color.fromARGB(255, 176, 58, 46);
+  static final background = const Color.fromARGB(255, 17, 31, 31);
+
+  static final primary = Color.fromARGB(255, 17, 31, 31);
+
+  static final secondary = const Color.fromARGB(243, 1, 13, 13);
+
   static final textdark = const Color.fromARGB(255, 121, 125, 127);
+
 
   static final ThemeData darkTheme = ThemeData(
     colorScheme: ColorScheme(
-      surface: backgrouddark,
+      surface: background,
       onSurface: textdark,
 
-      primary: primarydark,
+      outline: textdark,
+
+      primary: primary,
       onPrimary: textdark,
 
-      secondary: secondarydark,
-      onSecondary: textdark,
+      secondary: textdark,
+      onSecondary: secondary,
 
-      error: secondary2,
-      onError: secondary2,
+      error: const  Color.fromARGB(255, 255, 0, 0),
+      onError: textdark,
 
       brightness: Brightness.dark,
 
     ),
+
+
     textTheme: TextTheme(
       headlineLarge: TextStyle(
         color: textdark,
@@ -60,51 +66,60 @@ class AppTheme {
         fontFamily: 'Courier New',
       ),
     ),
+
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
+        color: textdark,
+        fontSize: 20,
         fontFamily: 'Courier New',
       ),
-      foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-      backgroundColor: const Color.fromARGB(255, 26, 25, 25),
+      foregroundColor: textdark,
+      backgroundColor: secondary,
     ),
+
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: const Color.fromARGB(134, 255, 255, 255),
       elevation: 4,
     ),
+
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         foregroundColor: WidgetStateProperty.all(
-          const Color.fromARGB(255, 179, 179, 179),
+          textdark
         ),
-        overlayColor: WidgetStateProperty.all(
-          const Color.fromARGB(0, 12, 12, 12),
+        textStyle: WidgetStateProperty.all(
+          TextStyle(
+            fontFamily: 'Courier New',
+            fontSize: 12,
+            fontWeight: FontWeight.normal,
+          ),
         ),
+
       ),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
+
         textStyle: WidgetStatePropertyAll(
           TextStyle(
             fontFamily: 'Courier New',
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
           ),
         ),
         side: WidgetStateProperty.all(
             BorderSide(
-              color: secondarydark,
+              color: textdark,
               width: 1,
             ),
         ),
         shape: WidgetStatePropertyAll(
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
-        backgroundColor: WidgetStatePropertyAll(backgrouddark),
+        backgroundColor: WidgetStatePropertyAll(primary),
         foregroundColor: WidgetStatePropertyAll(textdark),
-        overlayColor: WidgetStatePropertyAll(secondarydark)
+        overlayColor: WidgetStatePropertyAll(secondary),
       ),
     ),
 
@@ -112,20 +127,21 @@ class AppTheme {
       border: OutlineInputBorder(),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: secondarydark,
+          color: textdark,
           width: 1,
         )
       ),
       // floatingLabelBehavior: FloatingLabelBehavior.always,
-      prefixIconColor: secondarydark,
+      prefixIconColor: textdark,
       labelStyle: TextStyle(
         color: textdark,
         fontSize: 12.0,
         fontFamily: 'Courier New',
         fontWeight: FontWeight.bold,
       ),
+
       hintStyle: TextStyle(
-        color: secondarydark,
+        color: textdark,
         fontSize: 10.0,
         fontFamily: 'Courier New',
         fontWeight: FontWeight.normal,
@@ -140,7 +156,8 @@ class AppTheme {
     ),
 
     progressIndicatorTheme: ProgressIndicatorThemeData(
-      color: textdark,
+      color: secondary,
+      linearTrackColor: textdark,
     ),
   );
 }
