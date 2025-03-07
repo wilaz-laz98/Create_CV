@@ -529,6 +529,28 @@ class _CvAddPageState extends State<CvAddPage> {
         });
   }
 
+  Widget _saveProgress() {
+    return Container (
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: ElevatedButton(
+              onPressed: ()=>print("hello world"),
+              child: Text("Exit")
+            ),
+          ),
+          Flexible(
+            child: ElevatedButton(
+              onPressed: () => print("hello world"),
+              child: Text("Save Progress"),
+            ),
+          ),
+        ]
+      )
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -575,11 +597,9 @@ class _CvAddPageState extends State<CvAddPage> {
                           Expanded(
                             flex: 1,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 LinearProgressIndicator(value: progress1),
-                                SizedBox(
-                                  height: 20,
-                                ),
                                 Flexible(
                                   flex: 1,
                                   child: _highlightCategories(context),
@@ -629,10 +649,14 @@ class _CvAddPageState extends State<CvAddPage> {
                                               ),
                                             ],
                                           ),
+
                                         ],
                                       ),
                                     ),
                                   ),
+                                ),
+                                Flexible(
+                                  child: _saveProgress()
                                 ),
                               ],
                             ),
