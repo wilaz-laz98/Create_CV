@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _navigationTapIndex = 0;
+
+  final List<String> _titles = ['Home', "Add Cv"];
   final List<Widget> _children = [
     CvBrowsePage(),
     CvAddPage(),
@@ -25,13 +27,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My CVs', style: AppTheme.darkTheme.textTheme.headlineMedium,),
+        title: Text(
+          _titles[_navigationTapIndex],
+          style: AppTheme.darkTheme.textTheme.headlineMedium,
+        ),
         actions: [
           IconButton(
               icon: Icon(Icons.search),
@@ -47,15 +50,11 @@ class _HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
-            label: 'Profile',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Add CV',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_applications_rounded),
-            label: 'Settings',
           ),
         ],
       ),
